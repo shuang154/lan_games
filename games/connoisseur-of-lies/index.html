@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>谎言鉴赏家</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+
+        <div class="view active-view" id="setup-view">
+            <div class="view-header">
+                <h1>谎言鉴赏家 🧐</h1>
+                <p class="subtitle">你无需博学，但要会编！</p>
+            </div>
+            <div class="content">
+                <div class="player-input-wrapper">
+                    <input type="text" id="player-name-input" placeholder="输入你的昵称">
+                    <button id="join-btn">加入</button>
+                </div>
+                <h3>已加入的玩家:</h3>
+                <ul id="player-list"></ul>
+            </div>
+            <button class="main-action-btn" id="start-game-btn" disabled>等待房主开始游戏</button>
+        </div>
+
+        <div class="view" id="writing-view">
+            <div class="view-header">
+                <h2 id="question-category">冷知识问题</h2>
+                <p id="question-text">问题加载中...</p>
+            </div>
+            <div class="game-content" id="lie-submission-content">
+                <h3>针对以上问题，编造一个假答案：</h3>
+                <input type="text" id="lie-input" placeholder="输入以假乱真的答案">
+                <button class="main-action-btn" id="submit-lie-btn">提交谎言</button>
+            </div>
+             <div class="game-content hidden" id="waiting-for-others-content">
+                <h3>已提交！</h3>
+                <p class="subtitle">请等待其他玩家完成...</p>
+            </div>
+        </div>
+
+        <div class="view" id="voting-view">
+            <div class="view-header" style="text-align: center;">
+                <h2>哪个是唯一的真相？</h2>
+            </div>
+            <div id="answer-options-container">
+                </div>
+        </div>
+
+<div class="view" id="results-view">
+     <div class="view-header" style="text-align: center;">
+        <h2>回合结果</h2>
+    </div>
+
+    <div id="results-list">
+        </div>
+
+    <div id="explanation-box" class="hidden">
+        <h4>知识解析 🧠</h4>
+        <p id="explanation-text"></p>
+    </div>
+
+    <button class="main-action-btn" id="next-round-btn">查看计分板</button>
+</div>
+        
+        <div class="view" id="scoreboard-view">
+            <div class="view-header" style="text-align: center;">
+                <h2>当前得分</h2>
+            </div>
+            <ul id="scoreboard-list">
+                 </ul>
+            <button class="main-action-btn" id="continue-game-btn">下一回合</button>
+        </div>
+
+        <div class="view" id="game-over-view">
+            <div class="game-content">
+                <h2 class="loser-label">游戏结束！</h2>
+                <p id="winner-name-display" style="font-size: 42px; font-weight: 700; margin: 10px 0 40px 0;">获胜者是...</p>
+                <button class="main-action-btn" id="restart-game-btn">再玩一局</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/games/connoisseur-of-lies/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

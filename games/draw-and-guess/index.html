@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>你画我猜</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+
+        <div id="setup-view" class="view active-view">
+            <header class="view-header">
+                <h1>🇩 🇷 🇦 🇼  &  🇬 🇺 🇪 🇸 🇸</h1>
+                <p class="subtitle">🎨多人在线派对游戏🖌️</p>
+            </header>
+
+            <div class="content">
+                <div class="player-setup">
+                    <h3>加入玩家</h3>
+                    <div class="player-input-wrapper">
+                        <input type="text" id="player-name-input" placeholder="输入你的名字" maxlength="10">
+                        <button id="join-btn">+</button>
+                    </div>
+                    <ul id="player-list"></ul>
+                </div>
+
+                <div class="mode-setup">
+                    <h3>游戏模式</h3>
+                    <div id="mode-selection-container">
+                        <div class="mode-card" data-mode="classic">
+                            <div class="vote-counter">0</div>
+                            <h4>经典模式</h4>
+                            <p>轮流作画，猜对得分！考验你绘画和联想能力的时候到了。</p>
+                        </div>
+                        <div class="mode-card disabled" data-mode="relay">
+                             <div class="vote-counter">0</div>
+                            <h4>接力模式</h4>
+                            <p>敬请期待...</p>
+                        </div>
+                        <div class="mode-card disabled" data-mode="team">
+                             <div class="vote-counter">0</div>
+                            <h4>分组对抗</h4>
+                            <p>敬请期待...</p>
+                        </div>
+                        <div class="mode-card disabled" data-mode="crazy">
+                            <div class="vote-counter">0</div>
+                            <h4>疯狂猜词</h4>
+                            <p>敬请期待...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="view-footer">
+                <button id="start-game-btn" class="main-action-btn" disabled>开始游戏</button>
+            </footer>
+        </div>
+
+        <div id="game-view" class="view">
+            <header class="game-header">
+                <div id="turn-info">
+                    第 <span id="turn-counter">1</span> / <span id="total-turns">4</span> 轮
+                </div>
+                <div class="timer-display">
+                    <div id="turn-timer-bar"></div>
+                </div>
+                <div id="score-info">
+                    得分: <span id="my-score">0</span>
+                </div>
+            </header>
+
+            <main class="game-content">
+                <div id="topic-display-drawer">
+                    你要画的词是：<span id="word-to-draw"></span>
+                </div>
+                <canvas id="drawing-canvas"></canvas>
+                <div id="drawing-toolbar">
+                    <div class="tool-group colors">
+                        <div class="color-swatch active" style="background-color: #000000;" data-color="#000000"></div>
+                        <div class="color-swatch" style="background-color: #FF3B30;" data-color="#FF3B30"></div>
+                        <div class="color-swatch" style="background-color: #FF9500;" data-color="#FF9500"></div>
+                        <div class="color-swatch" style="background-color: #FFCC00;" data-color="#FFCC00"></div>
+                        <div class="color-swatch" style="background-color: #34C759;" data-color="#34C759"></div>
+                        <div class="color-swatch" style="background-color: #007AFF;" data-color="#007AFF"></div>
+                        <div class="color-swatch" style="background-color: #5856D6;" data-color="#5856D6"></div>
+                        <div class="color-swatch" style="background-color: #FFFFFF; border: 1px solid #ddd;" data-color="#FFFFFF"></div>
+                    </div>
+                     <div class="tool-group sizes">
+                        <button class="tool-btn" data-size="2">小</button>
+                        <button class="tool-btn active" data-size="5">中</button>
+                        <button class="tool-btn" data-size="10">大</button>
+                    </div>
+                    <div class="tool-group actions">
+                        <button class="tool-btn" id="eraser-btn">橡皮</button>
+                        <button class="tool-btn" id="clear-btn">清空</button>
+                    </div>
+                </div>
+            </main>
+
+            <footer class="game-footer">
+                <div id="chat-container">
+                    <ul id="chat-messages"></ul>
+                </div>
+                <div id="guess-input-wrapper">
+                    <input type="text" id="guess-input" placeholder="输入你的答案">
+                    <button id="send-guess-btn">发送</button>
+                </div>
+            </footer>
+        </div>
+
+        <div id="intermission-view" class="view">
+             <div class="content">
+                <h2>本轮结束</h2>
+                <p class="subtitle">正确答案是</p>
+                <h1 id="correct-answer-display"></h1>
+                <div id="turn-score-list"></div>
+            </div>
+            <footer class="view-footer">
+                <button id="next-turn-btn" class="main-action-btn">继续</button>
+            </footer>
+        </div>
+
+
+        <div id="game-over-view" class="view">
+            <div class="content">
+                <h2>游戏结束</h2>
+                <ul id="final-scoreboard">
+                    </ul>
+            </div>
+             <footer class="view-footer">
+                <button id="play-again-btn" class="main-action-btn">再来一局</button>
+            </footer>
+        </div>
+
+    </div>
+    
+    <script src="/games/draw-and-guess/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

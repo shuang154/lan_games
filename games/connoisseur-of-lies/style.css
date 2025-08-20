@@ -1,0 +1,178 @@
+:root {
+    /* 莫兰迪浅色多彩主题 */
+    --c-bg: #f4f3ee; /* 柔和的米白背景 */
+    --c-surface: #ffffff; /* 卡片/控件白色 */
+    --c-text-primary: #3d3d3d; /* 深灰色主文字 */
+    --c-text-secondary: #9a9a9a; /* 浅灰色次要文字 */
+    --c-border: #e8e6e1; /* 边框颜色 */
+    
+    /* 莫兰迪强调色 - 用于玩家 */
+    --c-player-1: #e1b3b3; /* 灰粉 */
+    --c-player-2: #b3e1c1; /* 灰绿 */
+    --c-player-3: #b3cbe1; /* 灰蓝 */
+    --c-player-4: #d1b3e1; /* 灰紫 */
+    --c-player-5: #e1d4b3; /* 灰黄 */
+
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --border-radius: 16px;
+    --shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--c-bg);
+    color: var(--c-text-primary);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 420px;
+    height: 100vh;
+    max-height: 800px;
+    background-color: var(--c-surface);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow);
+}
+
+/* --- 视图切换逻辑 --- */
+.view {
+    display: none; flex-direction: column; width: 100%; height: 100%;
+    padding: 30px; box-sizing: border-box; animation: fade-in 0.5s ease-out;
+    justify-content: space-between;
+}
+.view.active-view { display: flex; }
+.hidden { display: none !important; }
+
+@keyframes fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- 通用组件 --- */
+h1, h2, h3 { margin: 0; font-weight: 600; text-align: center;}
+h1 { font-size: 34px; letter-spacing: 0.5px; }
+h2 { font-size: 28px; }
+h3 { font-size: 16px; color: var(--c-text-secondary); margin-bottom: 15px; }
+.subtitle { font-size: 17px; color: var(--c-text-secondary); margin-top: 8px; text-align: center;}
+
+.main-action-btn {
+    width: 100%; padding: 16px; font-size: 17px; font-weight: 600; border: none;
+    border-radius: var(--border-radius);
+    background-color: var(--c-text-primary);
+    color: var(--c-surface);
+    cursor: pointer; transition: background-color 0.2s, transform 0.1s;
+    flex-shrink: 0; /* 防止按钮在flex布局中被压缩 */
+    margin-top: 20px;
+}
+.main-action-btn:hover { background-color: #555; }
+.main-action-btn:active { transform: scale(0.98); }
+.main-action-btn:disabled {
+    background-color: #e9e9e9;
+    color: var(--c-text-secondary); cursor: not-allowed;
+}
+
+input[type="text"] {
+    background-color: var(--c-bg); border: 1px solid var(--c-border);
+    border-radius: 12px; padding: 16px; font-size: 17px;
+    color: var(--c-text-primary); width: 100%; box-sizing: border-box;
+}
+input[type="text"]:focus {
+    outline: none; border-color: var(--c-player-3);
+    box-shadow: 0 0 0 2px var(--c-player-3);
+}
+
+.view-header { width: 100%; flex-shrink: 0; }
+.game-content { display: flex; flex-direction: column; align-items: center; flex-grow: 1; justify-content: center; gap: 20px; }
+
+/* --- 设置视图 --- */
+#setup-view .content { margin: 30px 0; }
+.player-input-wrapper { display: flex; gap: 10px; margin-top: 15px; }
+#player-name-input { flex-grow: 1; }
+#join-btn {
+    flex-shrink: 0; padding: 0 20px; font-size: 16px; font-weight: 500;
+    border-radius: 12px; border: none; background-color: var(--c-bg);
+    color: var(--c-text-primary); cursor: pointer; transition: background-color 0.2s;
+}
+#join-btn:hover { background-color: #e8e6e1; }
+#player-list {
+    list-style: none; padding: 0; margin-top: 15px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+}
+#player-list li {
+    padding: 8px 15px; border-radius: 20px; font-size: 16px; font-weight: 500;
+}
+
+/* --- 提问与投票视图 --- */
+#question-text { font-size: 20px; text-align: center; margin-top: 15px; line-height: 1.5; }
+#answer-options-container {
+    width: 100%; display: flex; flex-direction: column;
+    gap: 12px; overflow-y: auto; flex-grow: 1; justify-content: center;
+}
+.answer-option {
+    width: 100%; padding: 16px; font-size: 16px; text-align: left;
+    border: 1px solid var(--c-border);
+    border-radius: 12px; background-color: var(--c-surface);
+    cursor: pointer; transition: all 0.2s;
+}
+.answer-option:hover {
+    background-color: var(--c-bg); border-color: var(--c-player-3);
+}
+.answer-option.voted {
+    background-color: var(--c-player-3); color: white; border-color: var(--c-player-3);
+}
+
+/* --- 结果与计分板 --- */
+#results-list, #scoreboard-list {
+    list-style: none; padding: 0; width: 100%;
+    flex-grow: 1; overflow-y: auto;
+}
+.result-item, .score-item {
+    padding: 15px; border-radius: 12px;
+    background-color: var(--c-bg);
+    margin-bottom: 10px;
+}
+.result-item.is-truth { border: 2px solid var(--c-player-2); }
+.result-answer { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+.result-author { font-size: 14px; color: var(--c-text-secondary); margin-bottom: 12px; }
+.result-author span { font-weight: bold; }
+.voters-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.voter-chip {
+    padding: 4px 10px; font-size: 14px;
+    border-radius: 15px; font-weight: 500;
+}
+.score-item {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 18px; font-weight: 500;
+}
+.score-item .score { font-weight: 700; }
+
+.loser-label { font-size: 20px; color: var(--c-text-secondary); }
+
+/* --- 知识解释样式 --- */
+#explanation-box {
+    background-color: var(--c-bg);
+    border-radius: var(--border-radius);
+    padding: 15px 20px;
+    margin-top: 15px;
+    border: 1px solid var(--c-border);
+    animation: fade-in 0.5s;
+}
+#explanation-box h4 {
+    margin: 0 0 8px 0;
+    color: var(--c-text-primary);
+    font-size: 16px;
+    text-align: left;
+}
+#explanation-box p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--c-text-secondary);
+}
